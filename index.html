@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Full Associative-Most Recently Used Simulation</title>
+
+    <link rel="stylesheet" href="style.css">
+   <script src="index.js" defer></script>
+  </head>
+
+  <body>
+	<header>
+        <h1>Full Associative-Most Recently Used Simulation</h1>
+        <a href="{github}">Github</a>
+    </header>
+
+    <section class="main-section">
+        <section class="input-sidebar">
+            <p>Memory Block Sequence</p>
+            <div class="sequence-buttons">
+                <button class="sequence-button">Sequence</button>
+                <button class="random-button">Random</button>
+                <button class="midrepeat-button">Mid-repeat</button>
+            </div>
+            <ul class="sequence-input">
+                <li class="">0</li>
+                <li class="current-input">1</li>
+            </ul>
+            <div class="control-buttons">
+                <button class="step-button">Step</button>
+                <button class="final-button">Final</button>
+                <button class="reset-button">Reset</button>
+            </div>
+        </section>
+
+        <section class="cache-section">
+                <p class="cache-title">Cache</p>
+                <div class="cache-box">
+                    <ul class="cache-block-list">
+                        <li class="mru"><span class="cache-block-address">00</span><span>0</span><span class="cache-block-tag">MRU</span></li>
+                        <li class=""><span class="cache-block-address">01</span><span>1</span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">02</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">03</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">04</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">05</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">06</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">07</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">08</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">09</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">10</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">11</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">12</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">13</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">14</span><span></span><span class="cache-block-tag"></span></li>
+                        <li class=""><span class="cache-block-address">15</span><span></span><span class="cache-block-tag"></span></li>
+                    </ul>
+                </div>
+        </section>
+        
+        <section class="output-sidebar">
+            <p class="access-count-label">Memory Access Count</label>
+            <p class="access-count">0</p>
+            <p class="hit-count-label">Cache Hit Count</label>
+            <p class="hit-count">0</p>
+            <p class="miss-count-label">Cache Miss Count</label>
+            <p class="miss-count">0</p>
+            <p class="hit-rate-label">Cache Hit Rate</label>
+            <p class="hit-rate">0</p>
+            <p class="miss-rate-label">Cache Miss Rate</label>
+            <p class="miss-rate">0</p>
+            <p class="ave-access-time-label">Average Memory Access Time</label>
+            <p class="ave-access-time">0</p>
+            <p class="total-access-time-label">Total Memory Access Time</label>
+            <p class="total-access-time">0</p>
+
+            <label for="text-log" class="text-log-label">Text Log</label>
+            <textarea id="text-log" readonly placeholder=
+                "00:&#10;01:&#10;02:&#10;03:&#10;04:&#10;05:&#10;06:&#10;07:&#10;08:&#10;09:&#10;10:&#10;11:&#10;12:&#10;13:&#10;14:&#10;15:"></textarea>
+        </section>
+    </section>
+  </body>
+</html>
