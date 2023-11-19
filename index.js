@@ -24,22 +24,22 @@ const textLog = document.querySelector('#text-log');
 
 const CACHE_BLOCK_NUM = 16;
 const TEXT_LOG = [
-  '00: ',
-  '01: ',
-  '02: ',
-  '03: ',
-  '04: ',
-  '05: ',
-  '06: ',
-  '07: ',
-  '08: ',
-  '09: ',
-  '10: ',
-  '11: ',
-  '12: ',
-  '13: ',
-  '14: ',
-  '15: ',
+    '00: ',
+    '01: ',
+    '02: ',
+    '03: ',
+    '04: ',
+    '05: ',
+    '06: ',
+    '07: ',
+    '08: ',
+    '09: ',
+    '10: ',
+    '11: ',
+    '12: ',
+    '13: ',
+    '14: ',
+    '15: ',
 ];
 
 let inputArray = [];
@@ -55,18 +55,21 @@ function initializeSim() {
         currInputIndex = -1;
         generateSequence();
         updateSequenceInput();
-    })
+        toggleStepFinal('enable');
+    });
 
     randomBtn.addEventListener('click', () => {
         currInputIndex = -1;
         generateRandom();
         updateSequenceInput();
+        toggleStepFinal('enable');
     });
 
     midrepeatBtn.addEventListener('click', () => {
         currInputIndex = -1;
         generateMidRepeat();
         updateSequenceInput();
+        toggleStepFinal('enable');
     });
 
     stepBtn.addEventListener('click', () => {
@@ -103,7 +106,7 @@ function generateSequence() {
     inputArray = [];
 
     for (let i = 0; i < CACHE_BLOCK_NUM * 2; i++) {
-        tmp.push(i)
+        tmp.push(i);
     }
 
     for (let i = 0; i < NUMBER_OF_REPETITION; i++) {
@@ -115,7 +118,7 @@ function generateRandom() {
     inputArray = [];
 
     for (let i = 0; i < CACHE_BLOCK_NUM * 4; i++) {
-      inputArray.push(Math.floor(Math.random() * 100)); /* 0 - 99 */
+        inputArray.push(Math.floor(Math.random() * 100)); /* 0 - 99 */
     }
 }
 
@@ -125,20 +128,20 @@ function generateMidRepeat() {
     inputArray = [];
 
     for (let i = 0; i < CACHE_BLOCK_NUM; i++) {
-      tmp.push(i);
+        tmp.push(i);
     }
 
     for (let i = 0; i < CACHE_BLOCK_NUM * 2; i++) {
-      tmp.push(i);
+        tmp.push(i);
     }
 
     for (let i = 0; i < NUMBER_OF_REPETITION; i++) {
-      inputArray = inputArray.concat(tmp);
+        inputArray = inputArray.concat(tmp);
     }
 }
 
 function updateSequenceInput() {
-    sequenceInputList.textContent = "";
+    sequenceInputList.textContent = '';
 
     for (let i = 0; i < inputArray.length; i++) {
         sequenceInputList.innerHTML += `<li class="">${inputArray[i]}</li>`;
@@ -169,7 +172,7 @@ function finalFAMRU() {
 
 function resetCacheBlock() {
     for (let i = 0; i < CACHE_BLOCK_NUM; i++) {
-        updateCacheBlock(i, null)
+        updateCacheBlock(i, null);
     }
 }
 
@@ -179,12 +182,12 @@ function updateCacheBlock(cacheIndex, value) {
 
     if (prevMRU != null) {
         prevMRU.classList.remove('mru');
-        prevMRU.children[2].textContent = "";
+        prevMRU.children[2].textContent = '';
     }
 
     if (cacheIndex >= 0 && value == null) {
-        cacheBlocks[cacheIndex].children[1].textContent = "";
-        cacheBlocks[cacheIndex].children[2].textContent = "";
+        cacheBlocks[cacheIndex].children[1].textContent = '';
+        cacheBlocks[cacheIndex].children[2].textContent = '';
     } else {
         cacheBlocks[cacheIndex].classList.add('mru');
         cacheBlocks[cacheIndex].children[1].textContent = `${value}`;
@@ -194,36 +197,36 @@ function updateCacheBlock(cacheIndex, value) {
 
 /* Output Sidebar */
 function updateMemoryAccessCount(value) {
-    memoryAccessCount.textContent=`${value}`
+    memoryAccessCount.textContent = `${value}`;
 }
 
 function updateCacheHitCount(value) {
-  cacheHitCount.textContent = `${value}`;
+    cacheHitCount.textContent = `${value}`;
 }
 
 function updateCacheMissCount(value) {
-  cacheMissCount.textContent = `${value}`;
+    cacheMissCount.textContent = `${value}`;
 }
 
 function updateCacheHitRate(value) {
-  cacheHitRate.textContent = `${value}`;
+    cacheHitRate.textContent = `${value}`;
 }
 
 function updateCacheMissRate(value) {
-  cacheMissRate.textContent = `${value}`;
+    cacheMissRate.textContent = `${value}`;
 }
 
 function updateAveMemoryAccessTime(value) {
-  aveMemoryAccessTime.textContent = `${value}`;
+    aveMemoryAccessTime.textContent = `${value}`;
 }
 
 function updateTotMemoryAccessTime(value) {
-  totMemoryAccessTime.textContent = `${value}`;
+    totMemoryAccessTime.textContent = `${value}`;
 }
 
 function updateTextLog(cacheIndex, value) {
-    TEXT_LOG[cacheIndex] = TEXT_LOG[cacheIndex].concat(value, ", ")
-    textLog.textContent = TEXT_LOG.join("\n");
+    TEXT_LOG[cacheIndex] = TEXT_LOG[cacheIndex].concat(value, ', ');
+    textLog.textContent = TEXT_LOG.join('\n');
 }
 
 /* Other */
