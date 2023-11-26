@@ -45,7 +45,8 @@ const TEXT_LOG = [
 let inputArray = [];
 let currInputIndex = -1;
 let mruIndex = -1;
-
+let hit = 0;
+let miss = 0;
 function initializeSim() {
     /* Sequence test case is default */
     generateSequence();
@@ -74,25 +75,50 @@ function initializeSim() {
 
     stepBtn.addEventListener('click', () => {
         currInputIndex++;
-        // stepFAMRU();
-        // updateCacheBlock();
+        let index = 0;
+        index = stepFAMRU(inputArray[currInputIndex]);
+        updateCacheBlock(index, inputArray[currInputIndex]);
         updateSequenceInputHighlight();
-
+        updateCacheHitCount(hit);
+        updateCacheMissCount(miss);
+        updateMemoryAccessCount(miss+hit);
+        const hitRate = hit/(hit+miss);
+        const missRate = miss/(hit+miss);
+        updateCacheHitRate(hitRate);
+        updateCacheMissRate(missRate);
+        updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
+        updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
         if (currInputIndex == inputArray.length - 1) {
             toggleStepFinal('disable');
         }
     });
 
     finalBtn.addEventListener('click', () => {
-        currInputIndex = inputArray.length - 1;
-        // finalFAMRU();
-        // updateCacheBlock();
-        updateSequenceInputHighlight();
+        total = inputArray.length - currInputIndex;
+        for(i=0; i<total-1; i++){
+            currInputIndex++;
+            let index = 0;
+            index = stepFAMRU(inputArray[currInputIndex]);
+            updateCacheBlock(index, inputArray[currInputIndex]);
+            updateSequenceInputHighlight();
+            updateCacheHitCount(hit);
+            updateCacheMissCount(miss);
+            updateMemoryAccessCount(miss+hit);
+            const hitRate = hit/(hit+miss);
+            const missRate = miss/(hit+miss);
+            updateCacheHitRate(hitRate);
+            updateCacheMissRate(missRate);
+            updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
+            updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
+        }
         toggleStepFinal('disable');
     });
 
     resetBtn.addEventListener('click', () => {
         currInputIndex = -1;
+        mruIndex = -1;
+        hit = 0;
+        miss = 0;
         resetCacheBlock();
         updateSequenceInputHighlight();
         toggleStepFinal('enable');
@@ -162,12 +188,40 @@ function updateSequenceInputHighlight() {
 }
 
 /* Cache Section */
-function stepFAMRU() {
+function stepFAMRU(currInput) {
     /* TODO: */
+    //check if  mm block  is stored in cache
+    //if yes, then transfer mru to the  cache index containing the  mm block
+    //else, find replace the existing mm block in the cache index containing mru
+    let cacheBlocks = [...cacheBlockList.children];
+    let isHit = false;
+    let prevMRU = -1;
+    for(let i = 0; i < CACHE_BLOCK_NUM; i++) {
+        if(cacheBlocks[i].children[2].textContent == 'MRU') {
+            prevMRU = i;
+        }
+        if(currInput == parseInt(cacheBlocks[i].children[1].textContent)) {
+            mruIndex = i;
+            hit+=1;
+            console.log("hit = "+hit);
+            return i;
+        }
+    }
+    if(!isHit){
+
+        miss+=1;
+        if(miss > 16){
+            return prevMRU; //not hit and cache is full
+        }
+    }
+    return miss-1; //not hit and cache is not full
+    
 }
 
 function finalFAMRU() {
     /* TODO: */
+    //get the number of repititions of the stepFAMRU left
+    //loop stepFAMRU for the number of repititions
 }
 
 function resetCacheBlock() {
