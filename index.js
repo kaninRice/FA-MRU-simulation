@@ -23,7 +23,7 @@ const totMemoryAccessTime = document.querySelector('.total-access-time');
 const textLog = document.querySelector('#text-log');
 
 const CACHE_BLOCK_NUM = 16;
-let TOTAL_MEM_BLOCKS = 0;
+let TOTAL_MEM_BLOCKS = totalMemBlocks.value;
 const TEXT_LOG = [
     '00: ',
     '01: ',
@@ -55,6 +55,7 @@ submitBtn.addEventListener('click', () => {
     console.log(TOTAL_MEM_BLOCKS);
     initializeSim();
 });
+initializeSim();
 function initializeSim() {
     /* Sequence test case is default */
     generateSequence();
@@ -166,7 +167,7 @@ function generateMidRepeat() {
     const NUMBER_OF_REPETITION = 4;
     inputArray = [];
 
-    for (let i = 0; i < TOTAL_MEM_BLOCKS; i++) {
+    for (let i = 0; i < TOTAL_MEM_BLOCKS-1; i++) {
         tmp.push(i);
     }
 
@@ -174,7 +175,7 @@ function generateMidRepeat() {
         tmp.push(i);
     }
 
-    for (let i = 0; i <TOTAL_MEM_BLOCKS; i++) {
+    for (let i = 0; i <NUMBER_OF_REPETITION; i++) {
         inputArray = inputArray.concat(tmp);
     }
 }
