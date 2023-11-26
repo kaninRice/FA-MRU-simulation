@@ -58,7 +58,25 @@ submitBtn.addEventListener('click', () => {
 initializeSim();
 function initializeSim() {
     /* Sequence test case is default */
-    generateSequence();
+
+    //recall las sequence used when changing total memory blocks
+    if(randomBtn.disabled == true){
+        generateRandom();
+        midrepeatBtn.disabled = false;
+        randomBtn.disabled = true;
+        sequenceBtn.disabled = false;
+    }else if(midrepeatBtn.disabled == true){
+        generateMidRepeat();
+        midrepeatBtn.disabled = true;
+        randomBtn.disabled = false;
+        sequenceBtn.disabled = false;
+    }else{
+        generateSequence();
+        midrepeatBtn.disabled = false;
+        randomBtn.disabled = false;
+        sequenceBtn.disabled = true;
+    }
+
     updateSequenceInput();
 
     sequenceBtn.addEventListener('click', () => {
@@ -66,6 +84,9 @@ function initializeSim() {
         generateSequence();
         updateSequenceInput();
         toggleStepFinal('enable');
+        midrepeatBtn.disabled = false;
+        randomBtn.disabled = false;
+        sequenceBtn.disabled = true;
     });
 
     randomBtn.addEventListener('click', () => {
@@ -73,6 +94,9 @@ function initializeSim() {
         generateRandom();
         updateSequenceInput();
         toggleStepFinal('enable');
+        midrepeatBtn.disabled = false;
+        randomBtn.disabled = true;
+        sequenceBtn.disabled = false;
     });
 
     midrepeatBtn.addEventListener('click', () => {
@@ -80,6 +104,9 @@ function initializeSim() {
         generateMidRepeat();
         updateSequenceInput();
         toggleStepFinal('enable');
+        midrepeatBtn.disabled = true;
+        randomBtn.disabled = false;
+        sequenceBtn.disabled = false;
     });
 
     stepBtn.addEventListener('click', () => {
@@ -105,25 +132,7 @@ function initializeSim() {
     });
 
     finalBtn.addEventListener('click', () => {
-        total = inputArray.length - currInputIndex;
-        for(i=0; i<total-1; i++){
-            currInputIndex++;
-            let index = 0;
-            index = stepFAMRU(inputArray[currInputIndex]);
-            updateCacheBlock(index, inputArray[currInputIndex]);
-            
-            updateCacheHitCount(hit);
-            updateCacheMissCount(miss);
-            updateMemoryAccessCount(miss+hit);
-            const hitRate = hit/(hit+miss);
-            const missRate = miss/(hit+miss);
-            updateCacheHitRate(hitRate);
-            updateCacheMissRate(missRate);
-            updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
-            updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
-            updateTextLog(index, inputArray[currInputIndex]);
-            updateSequenceInputHighlight();
-        }
+        finalFAMRU();
         toggleStepFinal('disable');
     });
 
@@ -136,6 +145,7 @@ function initializeSim() {
         resetCacheBlock();
         updateSequenceInputHighlight();
         toggleStepFinal('enable');
+        
     });
 }
 
@@ -238,6 +248,25 @@ function finalFAMRU() {
     /* TODO: */
     //get the number of repititions of the stepFAMRU left
     //loop stepFAMRU for the number of repititions
+    let total = inputArray.length - currInputIndex;
+        for(i=0; i<total-1; i++){
+            currInputIndex++;
+            let index = 0;
+            index = stepFAMRU(inputArray[currInputIndex]);
+            updateCacheBlock(index, inputArray[currInputIndex]);
+            
+            updateCacheHitCount(hit);
+            updateCacheMissCount(miss);
+            updateMemoryAccessCount(miss+hit);
+            const hitRate = hit/(hit+miss);
+            const missRate = miss/(hit+miss);
+            updateCacheHitRate(hitRate);
+            updateCacheMissRate(missRate);
+            updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
+            updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
+            updateTextLog(index, inputArray[currInputIndex]);
+            updateSequenceInputHighlight();
+        }
 }
 
 function resetCacheBlock() {

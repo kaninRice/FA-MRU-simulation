@@ -12,7 +12,7 @@
     --accent-green: #03DAC6;
     --accent-green-light: #4BE8D9;
     --accent-violet: #BB86FC;
-    --accent-violet-light: #C697FF;
+    --accent-violet-light: #caa7f4;
     --accent-red: #CF6679;
     --accent-red-light: #D17384;
     --accent-violet-focus: #3E3846;
@@ -29,7 +29,6 @@ body {
     color: var(--text-white);
     background-color: var(--dp0);
 }
-
 /* Header Styles */
 
 header {
@@ -106,6 +105,11 @@ header a:hover {
     padding: 20px 4px;
     flex-grow: 1;
 }
+.input-container button:hover{
+    cursor: pointer;
+    background-color:var(--accent-green-light);
+
+}
 .input-container input{
     background-color: var(--dp2);
     color: var(--text-white);
@@ -129,7 +133,14 @@ header a:hover {
     padding: 4px 8px;
 }
 
-.sequence-buttons button:active {
+.sequence-buttons button:disabled {
+    background-color: var(--accent-violet-light);
+}
+.sequence-buttons button:disabled:hover {
+    cursor: not-allowed;
+}
+.sequence-buttons button:hover{
+    cursor: pointer;
     background-color: var(--accent-violet-light);
 }
 
@@ -182,28 +193,43 @@ header a:hover {
     padding: 20px 4px;
     flex-grow: 1;
 }
+.control-buttons button:hover{
+    cursor: pointer;
+}
 
 .step-button {
     background-color: var(--accent-green)
 }
-
-.step-button:active {
+.step-button:hover{
+    background-color: var(--accent-green-light);
+}
+.step-button:disabled{
     background-color: var(--accent-green-light)
 }
-
+.step-button:disabled:hover {
+    cursor: not-allowed;
+    background-color: var(--accent-green-light)
+}
 .final-button {
     background-color: var(--accent-violet)
 }
-
-.final-button:active {
+.final-button:hover{
+    background-color: var(--accent-violet-light);
+}
+.final-button:disabled{
     background-color: var(--accent-violet-light)
 }
+.final-button:disabled:hover {
+    cursor: not-allowed;
+    background-color: var(--accent-violet-light)
+}
+
 
 .reset-button {
     background-color: var(--accent-red)
 }
 
-.reset-button:active {
+.reset-button:hover {
     background-color: var(--accent-red-light)
 }
 
