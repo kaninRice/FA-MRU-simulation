@@ -48,13 +48,7 @@ let currInputIndex = -1;
 let mruIndex = -1;
 let hit = 0;
 let miss = 0;
-submitBtn.addEventListener('click', () => {
-    //resetAll
-    resetAll();
-    TOTAL_MEM_BLOCKS = totalMemBlocks.value;
-    console.log(TOTAL_MEM_BLOCKS);
-    initializeSim();
-});
+
 initializeSim();
 function initializeSim() {
     /* Sequence test case is default */
@@ -78,6 +72,28 @@ function initializeSim() {
     }
 
     updateSequenceInput();
+    submitBtn.addEventListener('click', () => {
+        //resetAll
+        resetAll();
+        TOTAL_MEM_BLOCKS = totalMemBlocks.value;
+        if(randomBtn.disabled == true){
+            generateRandom();
+            midrepeatBtn.disabled = false;
+            randomBtn.disabled = true;
+            sequenceBtn.disabled = false;
+        }else if(midrepeatBtn.disabled == true){
+            generateMidRepeat();
+            midrepeatBtn.disabled = true;
+            randomBtn.disabled = false;
+            sequenceBtn.disabled = false;
+        }else{
+            generateSequence();
+            midrepeatBtn.disabled = false;
+            randomBtn.disabled = false;
+            sequenceBtn.disabled = true;
+        }
+        updateSequenceInput();
+    });
 
     sequenceBtn.addEventListener('click', () => {
         currInputIndex = -1;
