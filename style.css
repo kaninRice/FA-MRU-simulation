@@ -86,7 +86,12 @@ header a:hover {
 }
 
 /* Input Sidebar Styles */
-
+.input-container{
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap:6px;
+}
 .input-sidebar button {
     font-size: 16px;
     font-weight: var(--semi-bold);
@@ -95,7 +100,18 @@ header a:hover {
     border: none;
     border-radius: 4px;
 }
+.input-container button{
+    background-color: var(--accent-green);
+    padding: 4px 8px;
+}
+.input-container input{
+    background-color: var(--dp2);
+    color: var(--text-white);
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
 
+}
 .sequence-buttons {
     gap: 6px;
 

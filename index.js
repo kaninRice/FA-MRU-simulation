@@ -2,9 +2,9 @@
 const sequenceBtn = document.querySelector('.sequence-button');
 const randomBtn = document.querySelector('.random-button');
 const midrepeatBtn = document.querySelector('.midrepeat-button');
-
+const totalMemBlocks = document.querySelector('#num-mem-blocks');
 const sequenceInputList = document.querySelector('.sequence-input');
-
+const submitBtn = document.querySelector('.submit-button');
 const stepBtn = document.querySelector('.step-button');
 const finalBtn = document.querySelector('.final-button');
 const resetBtn = document.querySelector('.reset-button');
@@ -23,6 +23,7 @@ const totMemoryAccessTime = document.querySelector('.total-access-time');
 const textLog = document.querySelector('#text-log');
 
 const CACHE_BLOCK_NUM = 16;
+let TOTAL_MEM_BLOCKS = 0;
 const TEXT_LOG = [
     '00: ',
     '01: ',
@@ -47,6 +48,13 @@ let currInputIndex = -1;
 let mruIndex = -1;
 let hit = 0;
 let miss = 0;
+submitBtn.addEventListener('click', () => {
+    //resetAll
+    resetAll();
+    TOTAL_MEM_BLOCKS = totalMemBlocks.value;
+    console.log(TOTAL_MEM_BLOCKS);
+    initializeSim();
+});
 function initializeSim() {
     /* Sequence test case is default */
     generateSequence();
@@ -78,7 +86,7 @@ function initializeSim() {
         let index = 0;
         index = stepFAMRU(inputArray[currInputIndex]);
         updateCacheBlock(index, inputArray[currInputIndex]);
-        updateSequenceInputHighlight();
+        
         updateCacheHitCount(hit);
         updateCacheMissCount(miss);
         updateMemoryAccessCount(miss+hit);
@@ -89,6 +97,7 @@ function initializeSim() {
         updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
         updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
         updateTextLog(index, inputArray[currInputIndex]);
+        updateSequenceInputHighlight();
         if (currInputIndex == inputArray.length - 1) {
             toggleStepFinal('disable');
         }
@@ -101,7 +110,7 @@ function initializeSim() {
             let index = 0;
             index = stepFAMRU(inputArray[currInputIndex]);
             updateCacheBlock(index, inputArray[currInputIndex]);
-            updateSequenceInputHighlight();
+            
             updateCacheHitCount(hit);
             updateCacheMissCount(miss);
             updateMemoryAccessCount(miss+hit);
@@ -112,6 +121,7 @@ function initializeSim() {
             updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
             updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
             updateTextLog(index, inputArray[currInputIndex]);
+            updateSequenceInputHighlight();
         }
         toggleStepFinal('disable');
     });
@@ -134,7 +144,7 @@ function generateSequence() {
     const NUMBER_OF_REPETITION = 4;
     inputArray = [];
 
-    for (let i = 0; i < CACHE_BLOCK_NUM * 2; i++) {
+    for (let i = 0; i < TOTAL_MEM_BLOCKS * 2; i++) {
         tmp.push(i);
     }
 
@@ -146,7 +156,7 @@ function generateSequence() {
 function generateRandom() {
     inputArray = [];
 
-    for (let i = 0; i < CACHE_BLOCK_NUM * 4; i++) {
+    for (let i = 0; i < TOTAL_MEM_BLOCKS * 4; i++) {
         inputArray.push(Math.floor(Math.random() * 100)); /* 0 - 99 */
     }
 }
@@ -156,15 +166,15 @@ function generateMidRepeat() {
     const NUMBER_OF_REPETITION = 4;
     inputArray = [];
 
-    for (let i = 0; i < CACHE_BLOCK_NUM; i++) {
+    for (let i = 0; i < TOTAL_MEM_BLOCKS; i++) {
         tmp.push(i);
     }
 
-    for (let i = 0; i < CACHE_BLOCK_NUM * 2; i++) {
+    for (let i = 0; i < TOTAL_MEM_BLOCKS * 2; i++) {
         tmp.push(i);
     }
 
-    for (let i = 0; i < NUMBER_OF_REPETITION; i++) {
+    for (let i = 0; i <TOTAL_MEM_BLOCKS; i++) {
         inputArray = inputArray.concat(tmp);
     }
 }
@@ -300,6 +310,7 @@ function resetOutput() {
         textLog.textContent = TEXT_LOG.join('\n');
     }
 }
+
 /* Other */
 function toggleStepFinal(option) {
     if (option === 'enable') {
@@ -310,5 +321,15 @@ function toggleStepFinal(option) {
         finalBtn.disabled = true;
     }
 }
+function resetAll(){
+    resetOutput();
+    resetCacheBlock();
+    currInputIndex = -1;
+    mruIndex = -1;
+    hit = 0;
+    miss = 0;
+    updateSequenceInputHighlight();
+    toggleStepFinal('enable');
+}
 
-initializeSim();
+
