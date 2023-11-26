@@ -167,6 +167,7 @@ function initializeSim() {
 
 /* Input Sidebar */
 function generateSequence() {
+    resetAll();
     let tmp = [];
     const NUMBER_OF_REPETITION = 4;
     inputArray = [];
@@ -182,13 +183,14 @@ function generateSequence() {
 
 function generateRandom() {
     inputArray = [];
-
+    resetAll();
     for (let i = 0; i < TOTAL_MEM_BLOCKS * 4; i++) {
         inputArray.push(Math.floor(Math.random() * 100)); /* 0 - 99 */
     }
 }
 
 function generateMidRepeat() {
+    resetAll();
     let tmp = [];
     const NUMBER_OF_REPETITION = 4;
     inputArray = [];
