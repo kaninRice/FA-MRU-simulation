@@ -115,6 +115,10 @@ header a:hover {
     text-align: center;
     flex-grow: 1;
 }
+.input-container button:hover{
+    cursor: pointer;
+    background-color: var(--accent-green-light);
+}
 .input-container input{
     background-color: var(--dp2);
     color: var(--text-white);
