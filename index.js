@@ -88,6 +88,7 @@ function initializeSim() {
         updateCacheMissRate(missRate);
         updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
         updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
+        updateTextLog(index, inputArray[currInputIndex]);
         if (currInputIndex == inputArray.length - 1) {
             toggleStepFinal('disable');
         }
@@ -110,6 +111,7 @@ function initializeSim() {
             updateCacheMissRate(missRate);
             updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
             updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
+            updateTextLog(index, inputArray[currInputIndex]);
         }
         toggleStepFinal('disable');
     });
@@ -119,6 +121,7 @@ function initializeSim() {
         mruIndex = -1;
         hit = 0;
         miss = 0;
+        resetOutput();
         resetCacheBlock();
         updateSequenceInputHighlight();
         toggleStepFinal('enable');
@@ -192,7 +195,9 @@ function stepFAMRU(currInput) {
     /* TODO: */
     //check if  mm block  is stored in cache
     //if yes, then transfer mru to the  cache index containing the  mm block
-    //else, find replace the existing mm block in the cache index containing mru
+    //else check if there is available space in cache,
+    //if yes, then place the mm in the free space
+    //else replace the existing mm block in the cache index containing mru
     let cacheBlocks = [...cacheBlockList.children];
     let isHit = false;
     let prevMRU = -1;
@@ -282,7 +287,19 @@ function updateTextLog(cacheIndex, value) {
     TEXT_LOG[cacheIndex] = TEXT_LOG[cacheIndex].concat(value, ', ');
     textLog.textContent = TEXT_LOG.join('\n');
 }
-
+function resetOutput() {
+    updateMemoryAccessCount(0);
+    updateCacheHitCount(0);
+    updateCacheMissCount(0);
+    updateCacheHitRate(0);
+    updateCacheMissRate(0);
+    updateAveMemoryAccessTime(0);
+    updateTotMemoryAccessTime(0);
+    for(let i = 0; i < TEXT_LOG.length; i++) {
+        TEXT_LOG[i] = TEXT_LOG[i].substring(0, 4);
+        textLog.textContent = TEXT_LOG.join('\n');
+    }
+}
 /* Other */
 function toggleStepFinal(option) {
     if (option === 'enable') {
