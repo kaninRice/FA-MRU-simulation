@@ -172,7 +172,7 @@ function generateSequence() {
     const NUMBER_OF_REPETITION = 4;
     inputArray = [];
 
-    for (let i = 0; i < TOTAL_MEM_BLOCKS * 2; i++) {
+    for (let i = 0; i < TOTAL_MEM_BLOCKS && i < CACHE_BLOCK_NUM * 2; i++) {
         tmp.push(i);
     }
 
@@ -184,8 +184,8 @@ function generateSequence() {
 function generateRandom() {
     inputArray = [];
     resetAll();
-    for (let i = 0; i < TOTAL_MEM_BLOCKS * 4; i++) {
-        inputArray.push(Math.floor(Math.random() * 100)); /* 0 - 99 */
+    for (let i = 0; i < CACHE_BLOCK_NUM * 4; i++) {
+        inputArray.push(Math.floor(Math.random() * TOTAL_MEM_BLOCKS )); /* 0 - # of memory blocks */
     }
 }
 
@@ -195,11 +195,11 @@ function generateMidRepeat() {
     const NUMBER_OF_REPETITION = 4;
     inputArray = [];
 
-    for (let i = 0; i < TOTAL_MEM_BLOCKS-1; i++) {
+    for (let i = 0; i < TOTAL_MEM_BLOCKS && i < CACHE_BLOCK_NUM; i++) {
         tmp.push(i);
     }
 
-    for (let i = 0; i < TOTAL_MEM_BLOCKS * 2; i++) {
+    for (let i = 1; i < TOTAL_MEM_BLOCKS && i < CACHE_BLOCK_NUM * 2; i++) {
         tmp.push(i);
     }
 
