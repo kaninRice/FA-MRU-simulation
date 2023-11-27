@@ -197,12 +197,12 @@ header a:hover {
     background-color: var(--accent-violet-focus);
 }
 
-div.input-container .doneCustomBtn {
-    background-color: var(--accent-yellow);
+div.input-container .clearCustomBtn {
+    background-color: var(--accent-red);
 }
 
-div.input-container .doneCustomBtn:hover {
-    background-color: var(--accent-yellow-light);
+div.input-container .clearCustomBtn:hover {
+    background-color: var(--accent-red-light);
 }
 
 .pushErr {

@@ -16,7 +16,7 @@ const customSeqInput = document.querySelector('.customSeqInput');
 const pushBlock = document.querySelector('#pushblocks');
 const pushErr = document.querySelector('.pushErr');
 const pushCustomBtn = document.querySelector('.pushCustomBtn');
-const doneCustomBtn = document.querySelector('.doneCustomBtn');
+const clearCustomBtn = document.querySelector('.clearCustomBtn');
 
 /* Cache Section */
 const cacheBlockList = document.querySelector('.cache-block-list');
@@ -70,7 +70,7 @@ function initializeSim() {
         //resetAll
         resetAll();
         TOTAL_MEM_BLOCKS = totalMemBlocks.value;
-        updateButton()
+        updateButton(lastBtn)
         updateSequenceInput();
     });
 
@@ -102,13 +102,6 @@ function initializeSim() {
         currInputIndex = -1;
         updateButton("Custom")
         generateCustom();
-    });
-
-    doneCustomBtn.addEventListener('click', () => {
-        customSeqInput.style.display = "none";
-        pushErr.style.display = "none";
-        updateSequenceInput();
-        toggleStepFinal('enable');
     });
 
     stepBtn.addEventListener('click', () => {
@@ -150,6 +143,7 @@ function initializeSim() {
     });
 }
 
+
 function updateButton(btn) {
     lastBtn = btn;
     customSeqInput.style.display = "none";
@@ -166,7 +160,7 @@ function updateButton(btn) {
         sequenceBtn.disabled = false;
         customBtn.disabled = false;
     } else if (lastBtn == "Custom"){
-        generateSequence();
+        generateCustom();
         midrepeatBtn.disabled = false;
         randomBtn.disabled = false;
         sequenceBtn.disabled = false;
@@ -228,19 +222,26 @@ function generateCustom () {
     resetAll();
     inputArray = [];
     sequenceInputList.textContent = '';
-    toggleStepFinal('disable');
 }
 
 pushCustomBtn.addEventListener('click', () => {
     blockInput = parseInt(pushBlock.value)
     pushErr.style.display = "none";
-    if (Number.isInteger(blockInput) && blockInput >= 0 && blockInput < TOTAL_MEM_BLOCKS) {
+    if (Number.isInteger(blockInput)) { 
+        if(blockInput >= 0 && blockInput < TOTAL_MEM_BLOCKS) {
         inputArray.push(blockInput)
         sequenceInputList.innerHTML += `<li class="">${blockInput}</li>`
         pushBlock.value = "";
+        toggleStepFinal('enable');
     } else {
         pushErr.style.display = null;
-    }
+    }}
+})
+
+clearCustomBtn.addEventListener('click', () => {
+    pushBlock.value = "";
+    pushErr.style.display = "none";
+    generateCustom ()
 })
 
 function updateSequenceInput() {
