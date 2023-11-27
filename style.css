@@ -17,6 +17,8 @@
     --accent-red-light: #D17384;
     --accent-violet-focus: #3E3846;
     --semi-bold: 600;
+    --accent-yellow: #4be887;
+    --accent-yellow-light: #4be89f;
 }
 
 * {
@@ -44,6 +46,7 @@ header {
 
 header h1 {
     font-size: 32px;
+    text-wrap: nowrap;
 }
 
 header a {
@@ -75,7 +78,7 @@ header a:hover {
     background-color: var(--dp1);
 
     width: 25%;
-    min-width: 350px;
+    min-width: fit-content;
     height: 92.6vh;
     gap: 8px;
     padding: 8px;
@@ -142,6 +145,8 @@ header a:hover {
 .sequence-buttons button {
     background-color: var(--accent-violet);
     padding: 4px 8px;
+    text-wrap: nowrap;
+    width: 100%;
 }
 
 .sequence-buttons button:disabled {
@@ -191,6 +196,26 @@ header a:hover {
 .sequence-input li.current-input {
     background-color: var(--accent-violet-focus);
 }
+
+div.input-container .doneCustomBtn {
+    background-color: var(--accent-yellow);
+}
+
+div.input-container .doneCustomBtn:hover {
+    background-color: var(--accent-yellow-light);
+}
+
+.pushErr {
+    color: var(--accent-red);
+    font-size: .5em;
+    padding-left: 2em;
+    line-height: 0;
+    width: fit-content;
+    height: fit-content;
+    margin-top: .1em;
+    margin-bottom: .5em;
+}
+
 
 .control-buttons {
     gap: 6px;

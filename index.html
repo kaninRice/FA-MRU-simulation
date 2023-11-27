@@ -28,7 +28,14 @@
                 <button class="sequence-button">Sequence</button>
                 <button class="random-button">Random</button>
                 <button class="midrepeat-button">Mid-repeat</button>
+                <button class="custom-button">Custom</button>
             </div>
+                <div style="display:none" class = "customSeqInput input-container">
+                    <input type="number" class="address-input" placeholder="read memory block" name ="pushblocks" id = "pushblocks" min = "1">
+                    <button class = "pushCustomBtn">push</button>
+                    <button class = "doneCustomBtn">done</button>
+                </div>
+            <div style="display: none" class="pushErr">Invalid Memory Access</div>
             <ul class="sequence-input">
                 <li class="">0</li>
                 <li class="current-input">1</li>

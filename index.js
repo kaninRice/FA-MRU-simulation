@@ -8,6 +8,15 @@ const submitBtn = document.querySelector('.submit-button');
 const stepBtn = document.querySelector('.step-button');
 const finalBtn = document.querySelector('.final-button');
 const resetBtn = document.querySelector('.reset-button');
+let lastBtn = "Sequence"
+
+// custom sequence
+const customBtn = document.querySelector('.custom-button');
+const customSeqInput = document.querySelector('.customSeqInput');
+const pushBlock = document.querySelector('#pushblocks');
+const pushErr = document.querySelector('.pushErr');
+const pushCustomBtn = document.querySelector('.pushCustomBtn');
+const doneCustomBtn = document.querySelector('.doneCustomBtn');
 
 /* Cache Section */
 const cacheBlockList = document.querySelector('.cache-block-list');
@@ -23,7 +32,7 @@ const totMemoryAccessTime = document.querySelector('.total-access-time');
 const textLog = document.querySelector('#text-log');
 
 const CACHE_BLOCK_NUM = 16;
-let TOTAL_MEM_BLOCKS = totalMemBlocks.value;
+let TOTAL_MEM_BLOCKS = parseInt(totalMemBlocks.value);
 const TEXT_LOG = [
     '00: ',
     '01: ',
@@ -54,44 +63,14 @@ function initializeSim() {
     /* Sequence test case is default */
 
     //recall las sequence used when changing total memory blocks
-    if(randomBtn.disabled == true){
-        generateRandom();
-        midrepeatBtn.disabled = false;
-        randomBtn.disabled = true;
-        sequenceBtn.disabled = false;
-    }else if(midrepeatBtn.disabled == true){
-        generateMidRepeat();
-        midrepeatBtn.disabled = true;
-        randomBtn.disabled = false;
-        sequenceBtn.disabled = false;
-    }else{
-        generateSequence();
-        midrepeatBtn.disabled = false;
-        randomBtn.disabled = false;
-        sequenceBtn.disabled = true;
-    }
-
+    updateButton(lastBtn)
     updateSequenceInput();
+
     submitBtn.addEventListener('click', () => {
         //resetAll
         resetAll();
         TOTAL_MEM_BLOCKS = totalMemBlocks.value;
-        if(randomBtn.disabled == true){
-            generateRandom();
-            midrepeatBtn.disabled = false;
-            randomBtn.disabled = true;
-            sequenceBtn.disabled = false;
-        }else if(midrepeatBtn.disabled == true){
-            generateMidRepeat();
-            midrepeatBtn.disabled = true;
-            randomBtn.disabled = false;
-            sequenceBtn.disabled = false;
-        }else{
-            generateSequence();
-            midrepeatBtn.disabled = false;
-            randomBtn.disabled = false;
-            sequenceBtn.disabled = true;
-        }
+        updateButton()
         updateSequenceInput();
     });
 
@@ -100,9 +79,7 @@ function initializeSim() {
         generateSequence();
         updateSequenceInput();
         toggleStepFinal('enable');
-        midrepeatBtn.disabled = false;
-        randomBtn.disabled = false;
-        sequenceBtn.disabled = true;
+        updateButton("Sequence")
     });
 
     randomBtn.addEventListener('click', () => {
@@ -110,9 +87,7 @@ function initializeSim() {
         generateRandom();
         updateSequenceInput();
         toggleStepFinal('enable');
-        midrepeatBtn.disabled = false;
-        randomBtn.disabled = true;
-        sequenceBtn.disabled = false;
+        updateButton("Random")
     });
 
     midrepeatBtn.addEventListener('click', () => {
@@ -120,9 +95,20 @@ function initializeSim() {
         generateMidRepeat();
         updateSequenceInput();
         toggleStepFinal('enable');
-        midrepeatBtn.disabled = true;
-        randomBtn.disabled = false;
-        sequenceBtn.disabled = false;
+        updateButton("Mid-repeat")
+    });
+
+    customBtn.addEventListener('click', () => {
+        currInputIndex = -1;
+        updateButton("Custom")
+        generateCustom();
+    });
+
+    doneCustomBtn.addEventListener('click', () => {
+        customSeqInput.style.display = "none";
+        pushErr.style.display = "none";
+        updateSequenceInput();
+        toggleStepFinal('enable');
     });
 
     stepBtn.addEventListener('click', () => {
@@ -161,8 +147,37 @@ function initializeSim() {
         resetCacheBlock();
         updateSequenceInputHighlight();
         toggleStepFinal('enable');
-        
     });
+}
+
+function updateButton(btn) {
+    lastBtn = btn;
+    customSeqInput.style.display = "none";
+    if(lastBtn == "Random"){
+        generateRandom();
+        midrepeatBtn.disabled = false;
+        randomBtn.disabled = true;
+        sequenceBtn.disabled = false;
+        customBtn.disabled = false;
+    }else if(lastBtn == "Mid-repeat"){
+        generateMidRepeat();
+        midrepeatBtn.disabled = true;
+        randomBtn.disabled = false;
+        sequenceBtn.disabled = false;
+        customBtn.disabled = false;
+    } else if (lastBtn == "Custom"){
+        generateSequence();
+        midrepeatBtn.disabled = false;
+        randomBtn.disabled = false;
+        sequenceBtn.disabled = false;
+        customBtn.disabled = true;
+    } else {
+        generateSequence();
+        midrepeatBtn.disabled = false;
+        randomBtn.disabled = false;
+        sequenceBtn.disabled = true;
+        customBtn.disabled = false;
+    }
 }
 
 /* Input Sidebar */
@@ -207,6 +222,26 @@ function generateMidRepeat() {
         inputArray = inputArray.concat(tmp);
     }
 }
+
+function generateCustom () {
+    customSeqInput.style.display = null;
+    resetAll();
+    inputArray = [];
+    sequenceInputList.textContent = '';
+    toggleStepFinal('disable');
+}
+
+pushCustomBtn.addEventListener('click', () => {
+    blockInput = parseInt(pushBlock.value)
+    pushErr.style.display = "none";
+    if (Number.isInteger(blockInput) && blockInput >= 0 && blockInput < TOTAL_MEM_BLOCKS) {
+        inputArray.push(blockInput)
+        sequenceInputList.innerHTML += `<li class="">${blockInput}</li>`
+        pushBlock.value = "";
+    } else {
+        pushErr.style.display = null;
+    }
+})
 
 function updateSequenceInput() {
     sequenceInputList.textContent = '';
