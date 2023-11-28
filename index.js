@@ -18,6 +18,10 @@ const pushErr = document.querySelector('.pushErr');
 const pushCustomBtn = document.querySelector('.pushCustomBtn');
 const clearCustomBtn = document.querySelector('.clearCustomBtn');
 
+//custom cache block num
+const totalCacheBlocks = document.querySelector('#num-cache-blocks');
+const setCacheBlockBtn = document.querySelector('.setCache-button');
+
 /* Cache Section */
 const cacheBlockList = document.querySelector('.cache-block-list');
 
@@ -31,26 +35,9 @@ const aveMemoryAccessTime = document.querySelector('.ave-access-time');
 const totMemoryAccessTime = document.querySelector('.total-access-time');
 const textLog = document.querySelector('#text-log');
 
-const CACHE_BLOCK_NUM = 16;
+let CACHE_BLOCK_NUM = parseInt(totalCacheBlocks.value);
 let TOTAL_MEM_BLOCKS = parseInt(totalMemBlocks.value);
-const TEXT_LOG = [
-    '00: ',
-    '01: ',
-    '02: ',
-    '03: ',
-    '04: ',
-    '05: ',
-    '06: ',
-    '07: ',
-    '08: ',
-    '09: ',
-    '10: ',
-    '11: ',
-    '12: ',
-    '13: ',
-    '14: ',
-    '15: ',
-];
+const TEXT_LOG = [];
 
 let inputArray = [];
 let currInputIndex = -1;
@@ -63,13 +50,23 @@ function initializeSim() {
     /* Sequence test case is default */
 
     //recall las sequence used when changing total memory blocks
-    updateButton(lastBtn)
+    setCacheBlock ();
+    updateButton(lastBtn);
     updateSequenceInput();
 
     submitBtn.addEventListener('click', () => {
         //resetAll
         resetAll();
-        TOTAL_MEM_BLOCKS = totalMemBlocks.value;
+        TOTAL_MEM_BLOCKS = parseInt(totalMemBlocks.value);
+        updateButton(lastBtn)
+        updateSequenceInput();
+    });
+
+    setCacheBlockBtn.addEventListener('click', () => {
+        //resetAll
+        resetAll();
+        CACHE_BLOCK_NUM = parseInt(totalCacheBlocks.value);
+        setCacheBlock ()
         updateButton(lastBtn)
         updateSequenceInput();
     });
@@ -265,6 +262,23 @@ function updateSequenceInputHighlight() {
     }
 }
 
+function setCacheBlock () {
+    TEXT_LOG.length = 0;
+    cacheBlockList.innerHTML = `<li class="mru"><span class="cache-block-address">00</span><span></span><span class="cache-block-tag">MRU</span></li>`
+    for (x = 0; x < CACHE_BLOCK_NUM; x++) {
+        log = `${x}: `
+        num = `${x}`
+        if (x < 10) {
+            log = `0${x}: `
+            num = `0${x}`
+        }
+
+        TEXT_LOG.push(log)
+        if (x > 0)
+        cacheBlockList.innerHTML += `<li class=""><span class="cache-block-address">${num}</span><span></span><span class="cache-block-tag"></span></li>`
+    }
+}
+
 /* Cache Section */
 function stepFAMRU(currInput) {
     /* TODO: */
@@ -290,7 +304,7 @@ function stepFAMRU(currInput) {
     if(!isHit){
 
         miss+=1;
-        if(miss > 16){
+        if(miss > CACHE_BLOCK_NUM){
             return prevMRU; //not hit and cache is full
         }
     }
@@ -337,7 +351,6 @@ function updateCacheBlock(cacheIndex, value) {
         prevMRU.classList.remove('mru');
         prevMRU.children[2].textContent = '';
     }
-
     if (cacheIndex >= 0 && value == null) {
         cacheBlocks[cacheIndex].children[1].textContent = '';
         cacheBlocks[cacheIndex].children[2].textContent = '';

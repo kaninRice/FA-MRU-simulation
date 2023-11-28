@@ -19,13 +19,20 @@
             <div class="memoryBlockInput">
                 Number of Memory Blocks: 
                 <div  class = "input-container">
-                    <input type="number" class="address-input" placeholder="8" name ="num-mem-blocks" id = "num-mem-blocks" value="8" min = "1">
+                    <input type="number" class="address-input" placeholder="8" name ="num-mem-blocks" id = "num-mem-blocks" value="32" min = "1">
                     <button class = "submit-button">set</button>
                 </div>
-            </div>            
+            </div>   
+            <div class="memoryBlockInput">
+                Number of Cache Blocks: 
+                <div  class = "input-container">
+                    <input type="number" class="address-input" placeholder="16" name ="num-cache-blocks" id = "num-cache-blocks" value="16" min = "1">
+                    <button class = "setCache-button">set</button>
+                </div>
+            </div>           
             <p>Memory Block Sequence</p>
             <div class="sequence-buttons">
-                <button class="sequence-button">Sequence</button>
+                <button class="sequence-button">Sequential</button>
                 <button class="random-button">Random</button>
                 <button class="midrepeat-button">Mid-repeat</button>
                 <button class="custom-button">Custom</button>
@@ -52,21 +59,6 @@
                 <div class="cache-box">
                     <ul class="cache-block-list">
                         <li class="mru"><span class="cache-block-address">00</span><span></span><span class="cache-block-tag">MRU</span></li>
-                        <li class=""><span class="cache-block-address">01</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">02</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">03</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">04</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">05</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">06</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">07</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">08</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">09</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">10</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">11</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">12</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">13</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">14</span><span></span><span class="cache-block-tag"></span></li>
-                        <li class=""><span class="cache-block-address">15</span><span></span><span class="cache-block-tag"></span></li>
                     </ul>
                 </div>
         </section>
