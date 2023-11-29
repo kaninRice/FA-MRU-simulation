@@ -17,7 +17,7 @@ The test cases were executed using different user inputs (main memory block coun
   
 16 was chosen because it is equal to the cache size, while 32 was chosen because it serves as the limit specified in the specifications [2n, where n = 16 (cache size)]. A memory block count of 1 will also be measured because it is the only scenario where definite values for the random sequence can be determined. To be able to compare the random sequence with the other sequences, the performance of the other sequences when the number of main memory blocks is 1, will also be measured, Besides the number of memory blocks, another constant value among all three, will be the manner in which the average memory access time, and total memory access time will be calculated. The formula for average memory access time, which refers to the average time it takes to perform a cache memory operation, can be denoted as:
 
-<html align="center">T<sub>AVG</sub> = hC + (1 - h) * M</html>
+T<sub>AVG</sub> = hC + (1 - h) * M
 
 Where:
 h = Hit rate
@@ -37,7 +37,7 @@ C = Cache access time
 # of words = 32
 1 - h = Miss rate
 M = Miss penalty
-*Note that for this simulation project, the # of words is specified in the specifications to be set to 32 words, the miss penalty is similar to that used to calculate the average memory access time.
+<i>*Note that for this simulation project, the # of words is specified in the specifications to be set to 32 words, the miss penalty is similar to that used to calculate the average memory access time.</i>
 
 
 Sequential Sequence
