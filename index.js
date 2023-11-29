@@ -31,10 +31,14 @@ const aveMemoryAccessTime = document.querySelector('.ave-access-time');
 const totMemoryAccessTime = document.querySelector('.total-access-time');
 const textLog = document.querySelector('#text-log');
 
-const CACHE_BLOCK_NUM = 16;
-const CACHE_LINE_NUM = 32;
+const CACHE_LINE_NUM = 32; //words
+
 const CACHE_ACCESS_TIME = 1;
-const MEMORY_ACCESS_TIME = 1 + (10 + CACHE_LINE_NUM * 10) / 2;
+const MEMORY_ACCESS_TIME = 10;
+
+const MISS_PENALTY = CACHE_ACCESS_TIME + CACHE_LINE_NUM * MEMORY_ACCESS_TIME;
+
+const CACHE_BLOCK_NUM = 16;
 let TOTAL_MEM_BLOCKS = parseInt(totalMemBlocks.value);
 const TEXT_LOG = [
     '00: ',
@@ -120,13 +124,15 @@ function initializeSim() {
         const missRate = miss / (hit + miss);
         updateCacheHitRate(hitRate);
         updateCacheMissRate(missRate);
+
+        // avg = hC * m*M
         updateAveMemoryAccessTime(
-            hitRate * CACHE_ACCESS_TIME + missRate * MEMORY_ACCESS_TIME
+            hitRate * CACHE_ACCESS_TIME + missRate * MISS_PENALTY
         );
+        // total = hit * C_Num * C + Miss * (MissPenalty)
+        // MissPenalty = CACHE_ACCESS_TIME + CACHE_LINE_NUM * MEMORY_ACCESS_TIME;
         updateTotMemoryAccessTime(
-            (hit * CACHE_LINE_NUM * CACHE_ACCESS_TIME)
-            + (miss * CACHE_LINE_NUM * (MEMORY_ACCESS_TIME + CACHE_ACCESS_TIME))
-            + (miss * CACHE_ACCESS_TIME));
+            (hit * CACHE_LINE_NUM * CACHE_ACCESS_TIME) + (miss * MISS_PENALTY));
         updateTextLog(index, inputArray[currInputIndex]);
         updateSequenceInputHighlight();
         if (currInputIndex == inputArray.length - 1) {
@@ -324,8 +330,14 @@ function finalFAMRU() {
             const missRate = miss/(hit+miss);
             updateCacheHitRate(hitRate);
             updateCacheMissRate(missRate);
-            updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
-            updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
+           // avg = hC * m*M
+            updateAveMemoryAccessTime(
+                hitRate * CACHE_ACCESS_TIME + missRate * MISS_PENALTY
+            );
+            // total = hit * C_Num * C + Miss * (MissPenalty)
+            // MissPenalty = CACHE_ACCESS_TIME + CACHE_LINE_NUM * MEMORY_ACCESS_TIME;
+            updateTotMemoryAccessTime(
+                (hit * CACHE_LINE_NUM * CACHE_ACCESS_TIME) + (miss * MISS_PENALTY));
             updateTextLog(index, inputArray[currInputIndex]);
             updateSequenceInputHighlight();
         }
