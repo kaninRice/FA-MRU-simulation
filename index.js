@@ -32,6 +32,9 @@ const totMemoryAccessTime = document.querySelector('.total-access-time');
 const textLog = document.querySelector('#text-log');
 
 const CACHE_BLOCK_NUM = 16;
+const CACHE_LINE_NUM = 32;
+const CACHE_ACCESS_TIME = 1;
+const MEMORY_ACCESS_TIME = 1 + (10 + CACHE_LINE_NUM * 10) / 2;
 let TOTAL_MEM_BLOCKS = parseInt(totalMemBlocks.value);
 const TEXT_LOG = [
     '00: ',
@@ -63,14 +66,14 @@ function initializeSim() {
     /* Sequence test case is default */
 
     //recall las sequence used when changing total memory blocks
-    updateButton(lastBtn)
+    updateButton(lastBtn);
     updateSequenceInput();
 
     submitBtn.addEventListener('click', () => {
         //resetAll
         resetAll();
         TOTAL_MEM_BLOCKS = totalMemBlocks.value;
-        updateButton(lastBtn)
+        updateButton(lastBtn);
         updateSequenceInput();
     });
 
@@ -79,7 +82,7 @@ function initializeSim() {
         generateSequence();
         updateSequenceInput();
         toggleStepFinal('enable');
-        updateButton("Sequence")
+        updateButton('Sequence');
     });
 
     randomBtn.addEventListener('click', () => {
@@ -87,7 +90,7 @@ function initializeSim() {
         generateRandom();
         updateSequenceInput();
         toggleStepFinal('enable');
-        updateButton("Random")
+        updateButton('Random');
     });
 
     midrepeatBtn.addEventListener('click', () => {
@@ -95,12 +98,12 @@ function initializeSim() {
         generateMidRepeat();
         updateSequenceInput();
         toggleStepFinal('enable');
-        updateButton("Mid-repeat")
+        updateButton('Mid-repeat');
     });
 
     customBtn.addEventListener('click', () => {
         currInputIndex = -1;
-        updateButton("Custom")
+        updateButton('Custom');
         generateCustom();
     });
 
@@ -109,16 +112,21 @@ function initializeSim() {
         let index = 0;
         index = stepFAMRU(inputArray[currInputIndex]);
         updateCacheBlock(index, inputArray[currInputIndex]);
-        
+
         updateCacheHitCount(hit);
         updateCacheMissCount(miss);
-        updateMemoryAccessCount(miss+hit);
-        const hitRate = hit/(hit+miss);
-        const missRate = miss/(hit+miss);
+        updateMemoryAccessCount(miss + hit);
+        const hitRate = hit / (hit + miss);
+        const missRate = miss / (hit + miss);
         updateCacheHitRate(hitRate);
         updateCacheMissRate(missRate);
-        updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
-        updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
+        updateAveMemoryAccessTime(
+            hitRate * CACHE_ACCESS_TIME + missRate * MISS_PENALTY
+        );
+        updateTotMemoryAccessTime(
+            (hit * CACHE_LINE_NUM * CACHE_ACCESS_TIME)
+            + (miss * CACHE_LINE_NUM * (MEMORY_ACCESS_TIME + CACHE_ACCESS_TIME))
+            + (miss * CACHE_ACCESS_TIME));
         updateTextLog(index, inputArray[currInputIndex]);
         updateSequenceInputHighlight();
         if (currInputIndex == inputArray.length - 1) {
