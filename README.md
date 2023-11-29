@@ -26,13 +26,14 @@ Where:<br>
 h = Hit rate<br>
 C = Cache access time<br>
 1 - h = Miss rate<br>
-M = Miss penalty<br>
+M = Miss penalty (LT, worse) = C + blocksize * memory access time.
+<br>
 
-<i>*Note that for this simulation project, the cache access time is 1ns, while the miss  penalty is 321ns.</i>
+<i>*Note that for this simulation project, the cache access time is 1ns, the memory access time is 10ts, and the cache line size is 32 words. As such, the miss  penalty is 321ns.</i>
 
 The total memory access time is defined as the total time it takes for all necessary memory operations to be executed. It is defined as:<br><br>
 
-T<sub>TOTAL</sub> = h(#of words * C) + (1-h)(# of words * M)
+T<sub>TOTAL</sub> = h(#of words * C) + (1-h) * M
 
 <br>
 Where: <br>
