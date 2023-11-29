@@ -218,7 +218,7 @@ function generateMidRepeat() {
     const NUMBER_OF_REPETITION = 4;
     inputArray = [];
 
-    for (let i = 0; i < TOTAL_MEM_BLOCKS && i < CACHE_BLOCK_NUM; i++) {
+    for (let i = 0; i < TOTAL_MEM_BLOCKS && i < CACHE_BLOCK_NUM - 1; i++) {
         tmp.push(i);
     }
 
