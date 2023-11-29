@@ -16,7 +16,7 @@ The test cases were executed using different user inputs (main memory block coun
 - #of Memory Blocks = 16
 - #of Memory Blocks = 32
 
-&nbsp;&nbsp;&nbsp;&nbsp;16 was chosen because it is equal to the cache size, while 32 was chosen because it serves as the limit specified in the specifications [2n, where n = 16 (cache size)]. A memory block count of 1 will also be measured because it is the only scenario where definite values for the random sequence can be determined. To be able to compare the random sequence with the other sequences, the performance of the other sequences when the number of main memory blocks is 1, will also be measured  
+&nbsp;&nbsp;&nbsp;&nbsp;16 was chosen because it is equal to the cache size, while 32 was chosen because it serves as the limit specified in the specifications [2n, where n = 16 (cache size)]. A memory block count of 1 will also be measured because it is the only scenario where definite values for the random sequence can be determined. To be able to compare the random sequence with the other sequences, the performance of the other sequences when the number of main memory blocks is 1, will also be measured  <br>
 &nbsp;&nbsp;&nbsp;&nbsp;Besides the number of memory blocks, another constant value among all three, will be the manner in which the average memory access time, and total memory access time will be calculated. The formula for average memory access time, which refers to the average time it takes to perform a cache memory operation, can be denoted as:<br><br>
 
 T<sub>AVG</sub> = hC + (1 - h) * M
@@ -31,7 +31,7 @@ M = Miss penalty (LT, worse) = C + blocksize * memory access time.
 <br>
 <i>*Note that for this simulation project, the cache access time is 1ns, the memory access time is 10ts, and the cache line size is 32 words. As such, the miss  penalty is 321ns.</i><br>
 <i>*Note that we assume worst case with the load through policy to ensure that the system is robust and performs well under adverse conditions</i>
-
+<br>
 The total memory access time is defined as the total time it takes for all necessary memory operations to be executed. It is defined as:<br><br>
 
 T<sub>TOTAL</sub> = H(#of words * C) + (1-H) * M
@@ -43,7 +43,7 @@ C = Cache access time<br>
 #of words = 32 <br>
 1 - h = total cache miss<br>
 M = Miss penalty<br>
-<i>*Note that for this simulation project, the # of words is specified in the specifications to be set to 32 words, the miss penalty is similar to that used to calculate the average memory access time.</i>
+<i>*Note that for this simulation project, the # of words set in the specifications is 32 words, the miss penalty is similar to that used to calculate the average memory access time.</i>
 
 ## 2. Sequential Sequence
 
