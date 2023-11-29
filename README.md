@@ -11,9 +11,9 @@
 Test Case Analysis
 Setup
 The test cases were executed using different user inputs (main memory block count). This was done so that the performance of the simulation project could be measured equally among the different test cases. Specifically, the three test cases will be tested where:
-- # of Memory Blocks = 1
-- # of Memory Blocks = 16
-- # of Memory Blocks = 32
+- #of Memory Blocks = 1
+- #of Memory Blocks = 16
+- #of Memory Blocks = 32
 16 was chosen because it is equal to the cache size, while 32 was chosen because it serves as the limit specified in the specifications [2n, where n = 16 (cache size)]. A memory block count of 1 will also be measured because it is the only scenario where definite values for the random sequence can be determined. To be able to compare the random sequence with the other sequences, the performance of the other sequences when the number of main memory blocks is 1, will also be measured, Besides the number of memory blocks, another constant value among all three, will be the manner in which the average memory access time, and total memory access time will be calculated. The formula for average memory access time, which refers to the average time it takes to perform a cache memory operation, can be denoted as:
 
 T<sub>AVG</sub> = hC + (1 - h) * M
