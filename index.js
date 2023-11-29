@@ -121,7 +121,7 @@ function initializeSim() {
         updateCacheHitRate(hitRate);
         updateCacheMissRate(missRate);
         updateAveMemoryAccessTime(
-            hitRate * CACHE_ACCESS_TIME + missRate * MISS_PENALTY
+            hitRate * CACHE_ACCESS_TIME + missRate * MEMORY_ACCESS_TIME
         );
         updateTotMemoryAccessTime(
             (hit * CACHE_LINE_NUM * CACHE_ACCESS_TIME)
@@ -378,11 +378,11 @@ function updateCacheMissRate(value) {
 }
 
 function updateAveMemoryAccessTime(value) {
-    aveMemoryAccessTime.textContent = `${value}`;
+    aveMemoryAccessTime.textContent = `${value}ns`;
 }
 
 function updateTotMemoryAccessTime(value) {
-    totMemoryAccessTime.textContent = `${value}`;
+    totMemoryAccessTime.textContent = `${value}ns`;
 }
 
 function updateTextLog(cacheIndex, value) {
