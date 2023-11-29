@@ -33,14 +33,14 @@ M = Miss penalty (LT, worse) = C + blocksize * memory access time.
 
 The total memory access time is defined as the total time it takes for all necessary memory operations to be executed. It is defined as:<br><br>
 
-T<sub>TOTAL</sub> = h(#of words * C) + (1-h) * M
+T<sub>TOTAL</sub> = H(#of words * C) + (1-H) * M
 
 <br>
 Where: <br>
-h = Hit rate<br>
+H = total cache hit<br>
 C = Cache access time<br>
 #of words = 32 <br>
-1 - h = Miss rate<br>
+1 - h = total cache miss<br>
 M = Miss penalty<br>
 <i>*Note that for this simulation project, the # of words is specified in the specifications to be set to 32 words, the miss penalty is similar to that used to calculate the average memory access time.</i>
 
