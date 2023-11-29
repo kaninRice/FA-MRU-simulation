@@ -1,9 +1,9 @@
 # FA + MRU Cache Simulation
 [Simulation](https://kaninrice.github.io/FA-MRU-simulation/)
 
-https://github.com/kaninRice/FA-MRU-simulation/assets/104405536/1ccd31a5-dc03-4fcc-8e3a-1e783d186478
+https://github.com/kaninRice/FA-MRU-simulation/assets/104405536/1ccd31a5-dc03-4fcc-8e3a-1e783d186478 <br>
 [Walkthrough]([url](https://drive.google.com/file/d/1g4XbxRZpbTrzbyNkIEnoj1ySaIoMzUoK/view?usp=sharing))
-
+[](url)
 ## Specifications
 - 16 Cache blocks
 - 32 words per cache line
