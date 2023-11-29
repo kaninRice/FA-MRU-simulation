@@ -43,14 +43,11 @@ M = Miss penalty
 Sequential Sequence
 
 Memory Access Count
-	When the number of main memory blocks is less than 32, the memory access count will always be equal to the number of main memory blocks, multiplied by 4. This is because as per the specifications, sequences up to the length of 2n [where n = 16 (cache size)] will be repeated four times. Main memory blocks with a count of 1 - 31 are still within this bound, thus this rule still applies.
-
-	When the number of memory blocks inputted is greater than or equal to 32, the memory access count will always be equal to 128. This is because based on the specifications, the maximum allowable length of the sequence is only equal to 2n (32), so once this is reached, regardless of the number of main memory blocks, the memory access count will always be equal to 4 * 2n, or 128.
+	When the number of main memory blocks is less than 32, the memory access count will always be equal to the number of main memory blocks, multiplied by 4. This is because as per the specifications, sequences up to the length of 2n [where n = 16 (cache size)] will be repeated four times. Main memory blocks with a count of 1 - 31 are still within this bound, thus this rule still applies. When the number of memory blocks inputted is greater than or equal to 32, the memory access count will always be equal to 128. This is because based on the specifications, the maximum allowable length of the sequence is only equal to 2n (32), so once this is reached, regardless of the number of main memory blocks, the memory access count will always be equal to 4 * 2n, or 128.
 
 Cache Hit and Miss Count
-	When the number of main memory blocks is less than or equal to 16, the ratio of the cache hit count to the cache miss count will always be 3 : 1. This is because, during the first pass, cache blocks 0 to m, are filled with main memory blocks 0 to m, where m is some amount of main memory blocks less than or equal to 16, minus one. As a result, this will result in a miss count of m at the end of the first pass. For the second to fourth pass, all m blocks will be in the cache, leading to a hit count of 3m.
-
-	Once the number of main memory blocks exceeds 16, the hit count remains at 48 (3 x 16), while the miss count gradually increases as the number of main memory blocks increases, eventually stopping when the number of main memory blocks reaches 32, where it will remain at a miss count of 80, while the hit count remains at a value of 48. This hit and miss count will also hold true for any number of main memory blocks exceeding 32.
+	When the number of main memory blocks is less than or equal to 16, the ratio of the cache hit count to the cache miss count will always be 3 : 1. This is because, during the first pass, cache blocks 0 to m, are filled with main memory blocks 0 to m, where m is some amount of main memory blocks less than or equal to 16, minus one. As a result, this will result in a miss count of m at the end of the first pass. For the second to fourth pass, all m blocks will be in the cache, leading to a hit count of 3m. 
+ 	Once the number of main memory blocks exceeds 16, the hit count remains at 48 (3 x 16), while the miss count gradually increases as the number of main memory blocks increases, eventually stopping when the number of main memory blocks reaches 32, where it will remain at a miss count of 80, while the hit count remains at a value of 48. This hit and miss count will also hold true for any number of main memory blocks exceeding 32.
 	
 	
 
