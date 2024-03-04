@@ -18,12 +18,10 @@ const pushErr = document.querySelector('.pushErr');
 const pushCustomBtn = document.querySelector('.pushCustomBtn');
 const clearCustomBtn = document.querySelector('.clearCustomBtn');
 
-//custom cache block num
-const totalCacheBlocks = document.querySelector('#num-cache-blocks');
-const setCacheBlockBtn = document.querySelector('.setCache-button');
-
 /* Cache Section */
 const cacheBlockList = document.querySelector('.cache-block-list');
+const totalCacheBlocks = document.querySelector('#num-cache-blocks');
+const setCacheBlockBtn = document.querySelector('.setCache-button');
 
 /*  Output Sidebar */
 const memoryAccessCount = document.querySelector('.access-count');
@@ -34,6 +32,13 @@ const cacheMissRate = document.querySelector('.miss-rate');
 const aveMemoryAccessTime = document.querySelector('.ave-access-time');
 const totMemoryAccessTime = document.querySelector('.total-access-time');
 const textLog = document.querySelector('#text-log');
+
+const CACHE_LINE_NUM = 32; //words
+
+const CACHE_ACCESS_TIME = 1;
+const MEMORY_ACCESS_TIME = 10;
+
+const MISS_PENALTY = CACHE_ACCESS_TIME + CACHE_LINE_NUM * MEMORY_ACCESS_TIME;
 
 let CACHE_BLOCK_NUM = parseInt(totalCacheBlocks.value);
 let TOTAL_MEM_BLOCKS = parseInt(totalMemBlocks.value);
@@ -76,7 +81,7 @@ function initializeSim() {
         generateSequence();
         updateSequenceInput();
         toggleStepFinal('enable');
-        updateButton("Sequence")
+        updateButton('Sequence');
     });
 
     randomBtn.addEventListener('click', () => {
@@ -84,7 +89,7 @@ function initializeSim() {
         generateRandom();
         updateSequenceInput();
         toggleStepFinal('enable');
-        updateButton("Random")
+        updateButton('Random');
     });
 
     midrepeatBtn.addEventListener('click', () => {
@@ -92,12 +97,12 @@ function initializeSim() {
         generateMidRepeat();
         updateSequenceInput();
         toggleStepFinal('enable');
-        updateButton("Mid-repeat")
+        updateButton('Mid-repeat');
     });
 
     customBtn.addEventListener('click', () => {
         currInputIndex = -1;
-        updateButton("Custom")
+        updateButton('Custom');
         generateCustom();
     });
 
@@ -106,16 +111,23 @@ function initializeSim() {
         let index = 0;
         index = stepFAMRU(inputArray[currInputIndex]);
         updateCacheBlock(index, inputArray[currInputIndex]);
-        
+
         updateCacheHitCount(hit);
         updateCacheMissCount(miss);
-        updateMemoryAccessCount(miss+hit);
-        const hitRate = hit/(hit+miss);
-        const missRate = miss/(hit+miss);
+        updateMemoryAccessCount(miss + hit);
+        const hitRate = hit / (hit + miss);
+        const missRate = miss / (hit + miss);
         updateCacheHitRate(hitRate);
         updateCacheMissRate(missRate);
-        updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
-        updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
+
+        // avg = hC * m*M
+        updateAveMemoryAccessTime(
+            hitRate * CACHE_ACCESS_TIME + missRate * MISS_PENALTY
+        );
+        // total = hit * C_Num * C + Miss * (MissPenalty)
+        // MissPenalty = CACHE_ACCESS_TIME + CACHE_LINE_NUM * MEMORY_ACCESS_TIME;
+        updateTotMemoryAccessTime(
+            (hit * CACHE_LINE_NUM * CACHE_ACCESS_TIME) + (miss * MISS_PENALTY));
         updateTextLog(index, inputArray[currInputIndex]);
         updateSequenceInputHighlight();
         if (currInputIndex == inputArray.length - 1) {
@@ -201,7 +213,7 @@ function generateMidRepeat() {
     const NUMBER_OF_REPETITION = 4;
     inputArray = [];
 
-    for (let i = 0; i < TOTAL_MEM_BLOCKS && i < CACHE_BLOCK_NUM; i++) {
+    for (let i = 0; i < TOTAL_MEM_BLOCKS && i < CACHE_BLOCK_NUM - 1; i++) {
         tmp.push(i);
     }
 
@@ -330,8 +342,14 @@ function finalFAMRU() {
             const missRate = miss/(hit+miss);
             updateCacheHitRate(hitRate);
             updateCacheMissRate(missRate);
-            updateAveMemoryAccessTime(hitRate*1 + ((10+20)/2)* missRate);
-            updateTotMemoryAccessTime(hit*2 + miss* (20+1)); 
+           // avg = hC * m*M
+            updateAveMemoryAccessTime(
+                hitRate * CACHE_ACCESS_TIME + missRate * MISS_PENALTY
+            );
+            // total = hit * C_Num * C + Miss * (MissPenalty)
+            // MissPenalty = CACHE_ACCESS_TIME + CACHE_LINE_NUM * MEMORY_ACCESS_TIME;
+            updateTotMemoryAccessTime(
+                (hit * CACHE_LINE_NUM * CACHE_ACCESS_TIME) + (miss * MISS_PENALTY));
             updateTextLog(index, inputArray[currInputIndex]);
             updateSequenceInputHighlight();
         }
@@ -351,6 +369,7 @@ function updateCacheBlock(cacheIndex, value) {
         prevMRU.classList.remove('mru');
         prevMRU.children[2].textContent = '';
     }
+
     if (cacheIndex >= 0 && value == null) {
         cacheBlocks[cacheIndex].children[1].textContent = '';
         cacheBlocks[cacheIndex].children[2].textContent = '';
@@ -383,11 +402,11 @@ function updateCacheMissRate(value) {
 }
 
 function updateAveMemoryAccessTime(value) {
-    aveMemoryAccessTime.textContent = `${value}`;
+    aveMemoryAccessTime.textContent = `${value}ns`;
 }
 
 function updateTotMemoryAccessTime(value) {
-    totMemoryAccessTime.textContent = `${value}`;
+    totMemoryAccessTime.textContent = `${value}ns`;
 }
 
 function updateTextLog(cacheIndex, value) {
